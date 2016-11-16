@@ -14,9 +14,6 @@ const metadata = require('metalsmith-metadata');
 const nunjucks = require('nunjucks');
 const nunjucksEnv = new nunjucks.Environment();
 
-
-const templateSource = path.join(__dirname, '../../web-files');
-
 module.exports = {
 
   _cleanDist: function() {
@@ -47,6 +44,25 @@ module.exports = {
     });
   },
 
+  _filterTemplates: function(templateName) {
+    return templateName.match(/^pisco-site-template-.*/);
+  },
+
+  _checkTemplate: function() {
+    return new Promise((res, rej) => {
+      this.logger.info('Searching for site templates in dependencies');
+      const dependencies = this.fsReadConfig('package.json').dependencies;
+      const templates = Object.keys(dependencies).filter(this._filterTemplates);
+
+      if (templates.length) {
+        this.params.templateSource = path.join('node_modules', templates[0]);
+        res();
+      }
+
+      rej('There is no template in your dependencies, add one!');
+    });
+  },
+
   _checkIndex: function() {
     return new Promise((res, rej) => {
       if (!this.fsExists(path.join(this.params.docsSource, 'index.md'))) {
@@ -61,7 +77,7 @@ module.exports = {
           })
           .then(() => {
             this.logger.info('Copying needed files');
-            const initFilesPath = path.join(templateSource, 'init_files');
+            const initFilesPath = path.join(this.params.templateSource, 'init_files');
             fs.copy(initFilesPath, this.params.docsSource, (err) => {
               if (err) {
                 this.logger.info('#red', `Error copying init files in ${this.params.destination} folder`);
@@ -79,7 +95,7 @@ module.exports = {
   },
 
   _configNunjucks: function() {
-    nunjucks.configure(path.join(templateSource, this.params.layouts), {watch: false});
+    nunjucks.configure(path.join(this.params.templateSource, this.params.layouts), {watch: false});
     nunjucks.configure('views', {autoescape: false});
   },
 
@@ -113,6 +129,7 @@ module.exports = {
   check(ok, ko) {
     return Promise.resolve()
       .then(this._checkFolder)
+      .then(this._checkTemplate)
       .then(this._checkIndex)
       .then(ok, ko);
   },
@@ -145,10 +162,10 @@ module.exports = {
         .use(navigation(navConfigs, {}))
         .use(layouts({
           engine: 'nunjucks',
-          directory: path.join(templateSource, this.params.layouts)
+          directory: path.join(this.params.templateSource, this.params.layouts)
         }))
         .use(assets({
-          source: path.join(templateSource, this.params.assets)
+          source: path.join(this.params.templateSource, this.params.assets)
         }))
 
         .build((err) => {
