@@ -1,7 +1,7 @@
 {
   "name" : "build",
   "description": "Generate website based in recipe docs",
-  "contexts": ["recipe"],
+  "contexts": ["documentation"],
   "docsSource": "docs",
   "destination": "dist",
   "layouts": "layouts",
