@@ -51,10 +51,13 @@ module.exports = {
   _checkTemplate: function() {
     return new Promise((res, rej) => {
       this.logger.info('Searching for site templates in dependencies');
-      const dependencies = this.fsReadConfig('package.json').dependencies;
+
+      const dependencies = this.fsReadConfig(this.pkgFile).dependencies;
       const templates = Object.keys(dependencies).filter(this._filterTemplates);
 
       if (templates.length) {
+        this.logger.info(`Templates found: ${templates.length}`);
+        this.logger.info('Using template:', '#yellow', `${templates[0]}`);
         this.params.templateSource = path.join('node_modules', templates[0]);
         res();
       }
