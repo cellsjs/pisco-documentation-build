@@ -1,0 +1,33 @@
+{
+  "name" : "build",
+  "description": "Generate website based in recipe docs",
+  "contexts": ["recipe"],
+  "docsSource": "docs",
+  "destination": "dist",
+  "layouts": "layouts",
+  "includes": "includes",
+  "ignore": [ "**/.DS_Store" ],
+  "assets": "assets",
+  "init_files": "init_files",
+  "targets": ["developers", "users"],
+  "indexPrompts": [
+    {
+      "type": "input",
+      "name": "toolName",
+      "required": true,
+      "message": "What is your tool name"
+    },
+    {
+      "type": "input",
+      "name": "toolClaim",
+      "required": true,
+      "message": "What is your tool claim"
+    },
+    {
+      "type": "input",
+      "name": "toolNpm",
+      "required": true,
+      "message": "What is your tool npm name"
+    }
+  ]
+}

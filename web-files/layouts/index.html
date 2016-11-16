@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{toolName}}</title>
+    <link rel="stylesheet" type="text/css" href="{{rootPath}}/css/main.css">
+  </head>
+  <body>
+    <section class="main-content">
+      <h1><i class="icon-piscosour"></i>{{ toolName }}</h1>
+      <h2>{{ toolClaim }}</h2>
+      <div class="terminal">
+        <div class="terminal_header">
+          <div class="terminal_buttons">
+            <span class="terminal_button">X</span><span class="terminal_button big">-</span>
+          </div>
+        </div>
+        <div class="terminal_content">
+          <p>
+            $ npm install -g {{ toolNpm }}
+          </p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a class="action-button" href="{{rootPath}}"> Docs for users </a>
+        <a class="action-button" href="{{rootPath}}"> Docs for developers </a>
+      </div>
+    </section>
+  </body>
+</html>

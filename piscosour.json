@@ -1,0 +1,6 @@
+{
+  "cmd": "pisco-documentation-build",
+  "repoTypes": [
+    "documentation"
+  ]
+}
