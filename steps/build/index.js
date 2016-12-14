@@ -57,13 +57,28 @@ module.exports = {
 
       if (templates.length) {
         this.logger.info(`Templates found: ${templates.length}`);
-        this.logger.info('Using template:', '#yellow', `${templates[0]}`);
-        this.params.templateSource = path.join('node_modules', templates[0]);
-        res();
-      }
 
-      rej('There is no template in your dependencies, add one!');
+        if (templates.length > 1) {
+          this._inquireTemplates(templates)
+          .then(() => this._useTemplate(this.params.selectedTemplate))
+          .then(res);
+        } else {
+          this._useTemplate(templates[0]);
+          res();
+        }
+      } else {
+        rej('There is no template in your dependencies, add one!');
+      }
     });
+  },
+  _useTemplate(template) {
+    this.logger.info('Using template:', '#yellow', `${template}`);
+    this.params.templateSource = path.join('node_modules', template);
+  },
+
+  _inquireTemplates(templates) {
+    this.params.templatesPrompt[0].choices = templates;
+    return this.inquire('templatesPrompt');
   },
 
   _checkIndex: function() {

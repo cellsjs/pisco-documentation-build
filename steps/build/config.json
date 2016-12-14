@@ -30,5 +30,13 @@
       "required": true,
       "message": "What is your tool npm name"
     }
+  ],
+  "templatesPrompt": [
+    {
+      "type": "list",
+      "name": "selectedTemplate",
+      "required": true,
+      "message": "There is more than one template in your dependencies, choose one:"
+    }
   ]
 }
