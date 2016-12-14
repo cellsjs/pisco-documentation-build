@@ -3,6 +3,7 @@
   "description": "Generate website based in recipe docs",
   "contexts": ["documentation"],
   "docsSource": "docs",
+  "documentsFolder": "documents",
   "destination": "dist",
   "layouts": "layouts",
   "includes": "includes",
