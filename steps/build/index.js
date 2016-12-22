@@ -194,15 +194,6 @@ module.exports = {
           return res();
         });
     })
-    .then(this._removeDocs)
     .then(ok, ko);
-  },
-
-  _removeDocs() {
-    this.params.targets.forEach((target) => {
-      const documents = path.join(this.params.docsSource, target, this.params.documentsFolder);
-      fs.removeSync(documents);
-      this.logger.info(`Folder ${documents}...`, '#green', 'removed!');
-    });
   }
 };
