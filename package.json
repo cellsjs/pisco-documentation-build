@@ -26,9 +26,13 @@
     "metalsmith-navigation": "^0.2.9",
     "metalsmith-rootpath": "^1.0.4",
     "nunjucks": "^3.0.0",
+    "pisco-plugin-git": "^0.3.1",
     "piscosour": "^1.0.0-alpha.8"
   },
   "engines": {
     "node": ">=4.0.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^0.12.0"
   }
 }
