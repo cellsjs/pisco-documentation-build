@@ -1,6 +1,7 @@
 {
   "name" : "build",
   "description": "Generate website based in recipe docs",
+  "plugins": ["git"],
   "contexts": ["documentation"],
   "docsSource": "docs",
   "documentsFolder": "documents",
@@ -11,6 +12,14 @@
   "assets": "assets",
   "init_files": "init_files",
   "targets": ["developers", "users"],
+  "githupPagesPrompt": [
+    {
+      "type": "confirm",
+      "name": "githubPage",
+      "required": true,
+      "message": "This is a Github repository. Do you want to upload the website as github page?"
+    }
+  ],
   "indexPrompts": [
     {
       "type": "input",

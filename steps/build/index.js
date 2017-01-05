@@ -12,6 +12,7 @@ const rootPath = require('metalsmith-rootpath');
 const navigation = require('metalsmith-navigation');
 const metadata = require('metalsmith-metadata');
 const nunjucks = require('nunjucks');
+const ghpages = require('gh-pages');
 const nunjucksEnv = new nunjucks.Environment();
 
 module.exports = {
@@ -144,6 +145,34 @@ module.exports = {
     done();
   },
 
+  _publishGithupPage() {
+    return new Promise((res, rej) => {
+      this.logger.info('Publishing Github Page...');
+      ghpages.publish(path.join(this.params.destination), (err) => {
+        if (err) {
+          this.logger.info('#red', 'Error uploading to github pages');
+          rej({message: 'Error publishing github pages'});
+        }
+        this.logger.info('#green', 'Website published in github pages');
+        res();
+      });
+    });
+  },
+
+  _uploadWebsite() {
+    if (this.gitIsGithub()) {
+      return Promise.resolve()
+        .then(() => this.inquire('githupPagesPrompt'))
+        .then(() => {
+          if (this.params.githubPage) {
+            return this._publishGithupPage();
+          } else {
+            this.logger.info('Skipping Github Page creation');
+          }
+        });
+    }
+  },
+
   check(ok, ko) {
     return Promise.resolve()
       .then(this._checkFolder)
@@ -194,6 +223,7 @@ module.exports = {
           return res();
         });
     })
+    .then(this._uploadWebsite)
     .then(ok, ko);
   }
 };
