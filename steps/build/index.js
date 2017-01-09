@@ -85,8 +85,27 @@ module.exports = {
   _checkIndex: function() {
     return new Promise((res, rej) => {
       if (!this.fsExists(path.join(this.params.docsSource, 'index.md'))) {
-        this.logger.info('#red', `index.md not found at ${this.params.docsSource} folder`);
-        rej({message: 'index.md file is needed to create the site'});
+        this.logger.info('#red', `You don't have an index.md into ${this.params.docsSource} folder`);
+        return this.inquire('indexPrompts')
+          .then(() => {
+            this.params.indexData = {
+              toolName: this.params.toolName,
+              toolClaim: this.params.toolClaim,
+              toolNpm: this.params.toolNpm
+            };
+          })
+          .then(() => {
+            this.logger.info('Copying needed files');
+            const initFilesPath = path.join(this.params.templateSource, 'init_files');
+            fs.copy(initFilesPath, this.params.docsSource, (err) => {
+              if (err) {
+                this.logger.info('#red', `Error copying init files in ${this.params.destination} folder`);
+                return rej(err);
+              }
+              this.logger.info('Initial files created');
+              return res();
+            });
+          });
       } else {
         this.logger.info('index.md file found!');
         return res();
