@@ -26,6 +26,7 @@
     "metalsmith-navigation": "^0.2.9",
     "metalsmith-rootpath": "^1.0.4",
     "nunjucks": "^3.0.0",
+    "pisco-cells-contexts": "^1.4.6",
     "pisco-plugin-git": "^0.3.1",
     "piscosour": "^1.0.0-alpha.8"
   },

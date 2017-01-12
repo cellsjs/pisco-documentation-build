@@ -1,8 +1,0 @@
-{
-  "name": "build",
-  "description": "Generate website based in md docs",
-  "type": "normal",
-  "steps": {
-    "build" : {}
-  }
-}
