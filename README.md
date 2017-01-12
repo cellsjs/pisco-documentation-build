@@ -10,76 +10,63 @@ For every target (users and developers), the documentation is organized in:
 * ```tutorials``` Quick and guided examples.
 * ```documentation``` for the API documentation.
 
-If your documents are organized, just run:
-
-```shell
-pisco recipe:create-website
+To install it run:
+```bash
+npm install -g pisco-documentation-build
 ```
 
-This will create a folder with name ```dist``` containing your static documentation webpage.
+-----
+## How to use it.
 
-If you want a different folder name for your distribution, just tell it to pisco:
-```shell
-pisco recipe:create-website --destination [your/dist/folder]
+### 1. Organize your docs.
+In order to create your website correctly, you must organize your docs folder according to this tree:
+
 ```
+docs
+│    index.md
+│
+└─── users
+│    │   get_started.md
+|    |   general01.md
+|    |   ...
+│    └─── guides
+│    │    | guide01.md
+│    │    | ...
+│    │    
+│    └─── tutorials
+│         | tutorial01.md
+│         | ...
+│       
+└─── developers
+│    │   get_started.md
+|    |   general02.md
+|    |   ...
+│    └─── guides
+│    │    | guide02.md
+│    │    | ...
+│    │    
+│    └─── tutorials
+│         | tutorial02.md
+│         | ...
+│
+└─── images
+│    │   image01.jpg
+│    │   ...
+│
+```
+**Required files and folders:**
+* It's required to have an ```index.md``` in the root of your documentation folder. (See the next step to see how to create one).
+* It's required to have the folders ```users``` and ```developers```.
+* It's required to have a ```get_started.md``` file at ```users``` and ```developers``` folders.
+* It's required to have a ```logo.svg``` file in your ```images``` folder.
 
+**Other considerations:**
+* It's not mandatory but recommended to have ```guides``` and ```tutorials```. Even if you don't have any the submenu will appear.
+![Empty submenu](img/empty_submenu.png)
+* If you use images in your md files, you should place them in a ```images``` folder at the ```docs``` folder root.
 
-## Docs organization.
-In order to create your website correctly, you must organize your docs folder according to this criteria:
-
-### Docs folder name
-By default, pisco will search for a folder with name ```webDocs```. If your documentation is in another folder you should tell pisco where is it.
-
-  ```shell
-  pisco recipe:create-website --docsSource [your-folder]
-  ```
-
-### Create the tree structure
-Your documentation folder should have the following structure.
-
-  ```
-  webDocs
-  │    index.md
-  │
-  └─── users
-  │    │   get_started.md
-  |    |   general01.md
-  |    |   ...
-  │    └─── guides
-  │    │    | guide01.md
-  │    │    | ...
-  │    │    
-  │    └─── tutorials
-  │         | tutorial01.md
-  │         | ...
-  │       
-  └─── developers
-  │    │   get_started.md
-  |    |   general02.md
-  |    |   ...
-  │    └─── guides
-  │    │    | guide02.md
-  │    │    | ...
-  │    │    
-  │    └─── tutorials
-  │         | tutorial02.md
-  │         | ...
-  │
-  └─── images
-  │    │   image01.jpg
-  │    │   ...
-  │
-  ```
-
-  **IMPORTANT:**
-  * You should have an ```index.md``` (if you don't add one, pisco will create for you asking you a few questions).
-  * You should have at least one md document at first level into ```users``` and ```developers``` because this will be the entry point of each section. It's recommended to place there the "get_started" file.
-  * If your recipe only has information for ```users``` or ```developers```, just delete the other folder.
-  * If you don't have ```guides``` or ```tutorials``` for any of your targets, just delete the folder.
-
-### Create an ```index.md``` file.
-
-It's necessary to create an ```index.md``` in the root of your documentation folder in order to have an entry point to your website.
+### 2. Create an index.md
+It's necessary to create an ```index.md``` in the root of your documentation folder in order to have an entry point of your website.
 The content of this file should be only this metadata.
 
 ```
@@ -93,8 +80,7 @@ layout: index.html
 
 * ```layout``` will be always ```index.html``` for the index.md file.
 
-### Add metadata to all your md files
-
+### 3. Add metadata to all your md files.
 It's necessary to provide a little bit of information about your documentation files to create the webpage correctly, so all your md files shoud have this metadata at the top.
 
 ```
@@ -107,7 +93,54 @@ layout: doc_page.html
 * ```title``` will be always the name of the link in the main menu.
 * ```layout``` will be always ```doc_page.html``` for your documentation files.
 
+### 4. Set a template to create the site.
+In order to generate the site, you can use the default pisco template for sites ([pisco-site-template-basic](https://globaldevtools.bbva.com/bitbucket/projects/CTOOL/repos/pisco-site-template-basic/browse)) or create your own template.
 
+To set the template you should add it as dependency **in your project**.
+For example, if you use the default pisco template, just add in your project's ```package.json```:
+
+```json
+{
+"pisco-site-template-basic": "*"
+}
+```
+
+### 5. Add a logo.
+It's mandatory to have a ```logo.svg``` file in your ```docs/image``` folder. This is the file used to print the logo at your index page an in the menu.
+
+### 6. Add guides and tutorials.
+Now you can add as much guides and tutorials as you want to your documentation.
+Add a md file for each guide or tutorial trying to use the best practices that you can find at the end of this doc.
+
+### 7. Generate auto-documentation pages.
+As we commented in the first lines we will have **guides**, **tutorials**, and ```documentation``` for every target.
+This documentation is automatically filled when you run ```recipe:docs``` flow.
+This flow will automatically create:
+* A ```documentation``` folder at ```users``` with one md file for each command available at your recipe.
+* A ```documentation``` folder at ```developers``` with the documentation of each plugin of your recipe.
+
+So, in order to have this
+
+### 8. Create your site!
+Ok, now everything is ready to create your site *automagically*!. Just run:
+
+```bash
+pisco documentation:build
+```
+
+Or if your documentation folder is not ```docs```
+
+```bash
+pisco documentation:build --docsSource [folder-name]
+```
+
+This will create your site files in a folder named ```dist```. If you want to use a different name, just run:
+
+```bash
+pisco documentation:build --destination [destination-folder]
+```
+
+* If your repo is a github repo, you will be asked to upload the website as Github Pages. This, internally, will create/update a branch named ```gh-pages``` with the content of the dist folder.
 
 ## Best practices writing your md files.
 
