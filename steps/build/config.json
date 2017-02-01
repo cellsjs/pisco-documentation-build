@@ -11,41 +11,5 @@
   "ignore": [ "**/.DS_Store" ],
   "assets": "assets",
   "init_files": "init_files",
-  "targets": ["developers", "users"],
-  "githupPagesPrompt": [
-    {
-      "type": "confirm",
-      "name": "githubPage",
-      "required": true,
-      "message": "This is a Github repository. Do you want to upload the website as github page?"
-    }
-  ],
-  "indexPrompts": [
-    {
-      "type": "input",
-      "name": "toolName",
-      "required": true,
-      "message": "What is your tool name"
-    },
-    {
-      "type": "input",
-      "name": "toolClaim",
-      "required": true,
-      "message": "What is your tool claim"
-    },
-    {
-      "type": "input",
-      "name": "toolNpm",
-      "required": true,
-      "message": "What is your tool npm name"
-    }
-  ],
-  "templatesPrompt": [
-    {
-      "type": "list",
-      "name": "selectedTemplate",
-      "required": true,
-      "message": "There is more than one template in your dependencies, choose one:"
-    }
-  ]
+  "targets": ["developers", "users"]
 }
