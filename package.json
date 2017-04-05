@@ -24,6 +24,7 @@
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-metadata": "0.0.4",
     "metalsmith-navigation": "^0.2.9",
+    "metalsmith-relative-links": "^1.1.1",
     "metalsmith-rootpath": "^1.0.4",
     "nunjucks": "^3.0.0",
     "pisco-cells-contexts": "^1.4.6",
