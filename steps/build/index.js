@@ -11,6 +11,7 @@ const ignore = require('metalsmith-ignore');
 const rootPath = require('metalsmith-rootpath');
 const navigation = require('metalsmith-navigation');
 const metadata = require('metalsmith-metadata');
+const links = require('metalsmith-relative-links');
 const nunjucks = require('nunjucks');
 
 const nunjucksEnv = new nunjucks.Environment();
@@ -160,6 +161,7 @@ module.exports = {
         .destination(this.params.destination)
         .use(ignore(this.params.ignore))
         .use(markdown())
+        .use(links())
         .use(navigation(navConfigs, {}))
         .use(layouts({
           engine: 'nunjucks',
