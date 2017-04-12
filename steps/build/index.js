@@ -127,6 +127,17 @@ module.exports = {
     done();
   },
 
+  _changeLinks(files, metalsmith, done) {
+    Object.keys(files).forEach(file => {
+      let content = files[file].contents.toString();
+      content = content.replace(/\(\S*.md\)/gmi, match => match.replace('.md', '.html'));
+
+      files[file].contents = new Buffer(content);
+    });
+
+    done();
+  },
+
   check(ok, ko) {
     return Promise.resolve()
       .then(this._checkFolder)
@@ -156,12 +167,12 @@ module.exports = {
 
       Metalsmith('./') //eslint-disable-line new-cap
         .use(this._setAppMetadata)
+        .use(this._changeLinks)
         .use(rootPath())
         .source(this.params.docsSource)
         .destination(this.params.destination)
         .use(ignore(this.params.ignore))
         .use(markdown())
-        .use(links())
         .use(navigation(navConfigs, {}))
         .use(layouts({
           engine: 'nunjucks',
@@ -170,7 +181,7 @@ module.exports = {
         .use(assets({
           source: path.join(this.params.templateSource, this.params.assets)
         }))
-
+        .use(links())
         .build((err) => {
           if (err) {
             return rej(err);
