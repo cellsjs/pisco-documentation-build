@@ -1,6 +1,6 @@
 {
   "name": "pisco-documentation-build",
-  "version": "1.0.1-alpha.0",
+  "version": "1.0.1-beta.0",
   "description": "Create a website from a documentation context",
   "main": "bin/pisco.js",
   "scripts": {
