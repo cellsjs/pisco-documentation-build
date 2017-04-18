@@ -28,7 +28,7 @@
     "metalsmith-rootpath": "^1.0.4",
     "nunjucks": "^3.0.0",
     "pisco-plugin-git": "^0.3.1",
-    "piscosour": "^1.0.0-alpha.8"
+    "piscosour": "^1.0.0"
   },
   "engines": {
     "node": ">=4.0.0"
